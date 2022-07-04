@@ -1,0 +1,12 @@
+{
+  "NetworkTables": {
+    "types": {
+      "/FMSInfo": "FMSInfo"
+    }
+  },
+  "NetworkTables Settings": {
+    "dsClient": false,
+    "mode": "Client",
+    "serverTeam": "localhost"
+  }
+}

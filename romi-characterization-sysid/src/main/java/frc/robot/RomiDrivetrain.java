@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.romi.RomiMotor;
 
 public class RomiDrivetrain {
   private static final double kCountsPerRevolution = 1440.0;
+  private static final double kWheelDiameterMeter = 0.07; // meters
 
   // The Romi has the left and right motors set to
   // PWM channels 0 and 1 respectively
@@ -35,10 +36,9 @@ public class RomiDrivetrain {
 
     m_diffDrive.setDeadband(0);
 
-    // For ease of characterization, we will output the number of wheel rotations 
-    // (vs actual distance traveled)
-    m_leftEncoder.setDistancePerPulse(1 / kCountsPerRevolution);
-    m_rightEncoder.setDistancePerPulse(1 / kCountsPerRevolution);
+    // Use inches as unit for encoder distances
+    m_leftEncoder.setDistancePerPulse((Math.PI * kWheelDiameterMeter) / kCountsPerRevolution);
+    m_rightEncoder.setDistancePerPulse((Math.PI * kWheelDiameterMeter) / kCountsPerRevolution);
     resetEncoders();
   }
 
