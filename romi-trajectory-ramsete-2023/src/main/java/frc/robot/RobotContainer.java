@@ -119,17 +119,16 @@ public class RobotContainer {
     m_drivetrain.setDefaultCommand(getArcadeDriveCommand());
 
     // Example of how to use the onboard IO
-    Button onboardButtonA = new Button(m_onboardIO::getButtonAPressed);
-    onboardButtonA
-        .whenActive(new PrintCommand("Button A Pressed"))
-        .whenInactive(new PrintCommand("Button A Released"));
+    // Button onboardButtonA = new Button(m_onboardIO::getButtonAPressed);
+    // onboardButtonA
+    //     .whenActive(new PrintCommand("Button A Pressed"))
+    //     .whenInactive(new PrintCommand("Button A Released"));
 
     // Setup SmartDashboard options
     m_chooser.setDefaultOption("Barrel Race", generateRamseteCommand(getTrajectoryFile(Constants.Trajectories.barrelRacePath)));
     m_chooser.addOption("Ramsete Trajectory", generateRamseteCommand(Constants.Trajectories.simpleTrajectory));
     m_chooser.addOption("Auto Routine Distance", new AutonomousDistance(m_drivetrain));
     m_chooser.addOption("Auto Routine Time", new AutonomousTime(m_drivetrain));
-    m_drivetrain.addTrajectoryToField("Barrel Race", getTrajectoryFile(Constants.Trajectories.barrelRacePath));
     
     SmartDashboard.putData(m_chooser);
   }

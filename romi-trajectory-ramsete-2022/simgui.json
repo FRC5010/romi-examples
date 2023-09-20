@@ -25,6 +25,62 @@
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
       "/SmartDashboard/SendableChooser[0]": "String Chooser",
       "/SmartDashboard/field": "Field2d"
+    },
+    "windows": {
+      "/SmartDashboard/field": {
+        "Barrel Race": {
+          "arrowSize": 3,
+          "arrowWeight": 1.0,
+          "style": "Line",
+          "weight": 1.0
+        },
+        "Poses": {
+          "arrowColor": [
+            0.0,
+            255.0,
+            239.99998474121094,
+            255.0
+          ],
+          "arrowSize": 26,
+          "arrowWeight": 1.0,
+          "color": [
+            255.0,
+            255.0,
+            0.0,
+            255.0
+          ],
+          "length": 0.15240000188350677,
+          "weight": 1.0,
+          "width": 0.15240000188350677
+        },
+        "Robot": {
+          "arrowColor": [
+            255.0,
+            0.0,
+            225.00009155273438,
+            255.0
+          ],
+          "arrowSize": 26,
+          "arrowWeight": 1.0,
+          "color": [
+            0.0,
+            0.0,
+            255.0,
+            255.0
+          ],
+          "image": "C:\\Users\\clroz\\Downloads\\IMG_3215.jpg",
+          "length": 0.15240000188350677,
+          "style": "Box/Image",
+          "weight": 1.0,
+          "width": 0.15240000188350677
+        },
+        "height": 1.0,
+        "width": 2.0,
+        "window": {
+          "name": "Home Field",
+          "visible": true
+        }
+      }
     }
   },
   "NetworkTables": {

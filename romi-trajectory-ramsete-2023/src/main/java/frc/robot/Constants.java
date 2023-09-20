@@ -27,15 +27,12 @@ import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstrai
  * wherever the constants are needed, to reduce verbosity.
  */
 public final class Constants {
-  public static final long posesPerSecond = 4;
-  public static final long poseRecordingDelay = 1000000 / posesPerSecond;
-
   public static final class DriveConstants {
     public static final double ksVolts = 2.4737;
     public static final double kvVoltSecondsPerMeter = 9.1895;
     public static final double kaVoltSecondsSquaredPerMeter = 2.3854;
 
-    public static final double kPDriveVel = 15;
+    public static final double kPDriveVel = 8;
 
     public static final double kTrackwidthMeters = 0.142072613;
     public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(

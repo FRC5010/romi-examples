@@ -6,21 +6,13 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
-import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
-import edu.wpi.first.wpilibj.smartdashboard.FieldObject2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Constants;
 import frc.robot.sensors.RomiGyro;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -53,11 +45,6 @@ public class Drivetrain extends SubsystemBase {
   // Also show a field diagram
   private final Field2d m_field2d = new Field2d();
 
-  private FieldObject2d robotPositions = m_field2d.getObject("Poses");
-  private long positionTimer = RobotController.getFPGATime();
-  private List<Pose2d> recordedPoses = new ArrayList<>();
-  private Pose2d lastPose = new Pose2d();
-
   /** Creates a new Drivetrain. */
   public Drivetrain() {
     // Use inches as unit for encoder distances
@@ -65,7 +52,8 @@ public class Drivetrain extends SubsystemBase {
     m_rightEncoder.setDistancePerPulse((Math.PI * kWheelDiameterMeter) / kCountsPerRevolution);
     resetEncoders();
 
-    m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
+    m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d(), 
+      m_leftEncoder.getDistance(), m_rightEncoder.getDistance());
     SmartDashboard.putData("field", m_field2d);
   }
 
@@ -172,27 +160,11 @@ public class Drivetrain extends SubsystemBase {
   public void periodic() {
     // Update the odometry in the periodic block
     m_odometry.update(m_gyro.getRotation2d(), m_leftEncoder.getDistance(), m_rightEncoder.getDistance());
-    Pose2d currentPose2d = getPose();
+    
     // Also update the Field2D object (so that we can visualize this in sim)
-    m_field2d.setRobotPose(currentPose2d);
-
-    long currentTime = RobotController.getFPGATime();
-    if (currentTime > positionTimer + Constants.poseRecordingDelay) {
-      positionTimer = currentTime;
-      if (lastPose.getX() != currentPose2d.getX() || lastPose.getY() != currentPose2d.getY()) {
-        lastPose = currentPose2d;
-        recordedPoses.add(getPose());
-        if (recordedPoses.size() > 84) {
-          recordedPoses.remove(0);
-        }
-        robotPositions.setPoses(recordedPoses);
-      }
-    }
+    m_field2d.setRobotPose(getPose());
   }
 
-  public void addTrajectoryToField(String name, Trajectory trajectory) {
-    m_field2d.getObject(name).setTrajectory(trajectory);
-  }
   /**
    * Returns the currently estimated pose of the robot.
    * @return The pose
@@ -215,7 +187,8 @@ public class Drivetrain extends SubsystemBase {
    */
   public void resetOdometry(Pose2d pose) {
     resetEncoders();
-    m_odometry.resetPosition(pose, m_gyro.getRotation2d());
+    m_odometry.resetPosition(m_gyro.getRotation2d(), 
+      m_leftEncoder.getDistance(), m_rightEncoder.getDistance(), pose);
   }
 
   /**
